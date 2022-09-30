@@ -18,30 +18,30 @@ class NuevaHojaJDialog extends JDialog {
 	public NuevaHojaJDialog(JFrame frame) {
 		
 		super(frame,"Nueva hoja de calculo",true);
-		JPanel panelPrincipal=new JPanel();
-		JPanel filasPanel= new JPanel();
-		JPanel columnasPanel= new JPanel();
-		JPanel botonesPanel= new JPanel();
-		JLabel filasLabel= new JLabel("Numero Filas:");
-		JLabel columnasLabel= new JLabel("Numero  Columnas:");
-		JTextField filasTextField= new JTextField();
+		JPanel panelPrincipal = new JPanel();
+		JPanel filasPanel = new JPanel();
+		JPanel columnasPanel = new JPanel();
+		JPanel botonesPanel = new JPanel();
+		JLabel filasLabel = new JLabel("Numero Filas:");
+		JLabel columnasLabel = new JLabel("Numero  Columnas:");
+		JTextField filasTextField = new JTextField();
 
-		JTextField columnasTextField= new JTextField();
+		JTextField columnasTextField = new JTextField();
 		
 		filasTextField.setPreferredSize(new Dimension(80,20));
 		columnasTextField.setPreferredSize(new Dimension(80,20));
-		JButton aceptarButton= new JButton("Aceptar");
-		ActionListener a=new ActionListener() {
+		JButton aceptarButton = new JButton("Aceptar");
+		ActionListener a =new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					try {	
-						filas=Integer.parseInt(filasTextField.getText());
+						filas = Integer.parseInt(filasTextField.getText());
 					} catch (Exception e) {
 						throw new NumberFormatException("Las filas no pueden contener caracteres que no sean numeros");
 					}
 					try {	
-						columnas=Integer.parseInt(columnasTextField.getText());
+						columnas = Integer.parseInt(columnasTextField.getText());
 					} catch (Exception e) {
 						throw new NumberFormatException("Las columnas no pueden contener caracteres que no sean numeros");
 					}
@@ -74,7 +74,7 @@ class NuevaHojaJDialog extends JDialog {
 		};
 		
 		aceptarButton.addActionListener(a);
-		JButton cancelarButton= new JButton("Cancelar");
+		JButton cancelarButton = new JButton("Cancelar");
 		cancelarButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

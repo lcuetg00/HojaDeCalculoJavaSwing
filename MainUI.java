@@ -291,8 +291,8 @@ public class MainUI {
 
     public static String numALetras(int i) { //Convierte un numero a una letra
         int quotient, remainder;
-        String result="";
-        quotient=i-1;
+        String result = "";
+        quotient = i-1;
 
         while (quotient >= 0)
         {

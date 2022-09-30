@@ -29,11 +29,11 @@ class TablaJPanel extends JScrollPane {
 	public TablaJPanel(FocusListener escuchaTextField) { //le paso el listener de los texfield
 		//como parametro para luego anyadirselo a cada textfield
 		super();
-		this.escuchaTextField=escuchaTextField;
+		this.escuchaTextField = escuchaTextField;
 		COLOR_POR_DEFECTO = new JTextField().getBackground();
 		COLOR_EN_SELECCION = COLOR_POR_DEFECTO.darker();
 		listaCambios=new Actualizacion[TAMANYO_LISTA_CAMBIOS]; 
-		punteroListaCambios=0;
+		punteroListaCambios = 0;
 		
 		/*
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -54,8 +54,8 @@ class TablaJPanel extends JScrollPane {
 	}
 	
 	private void generar() {
-		listaTextFields= new TextFieldCelda[hoja.filas][hoja.columnas];
-		if(tablaPanel!=null) {
+		listaTextFields = new TextFieldCelda[hoja.filas][hoja.columnas];
+		if(tablaPanel != null) {
 			this.remove(tablaPanel);
 		}
 		
@@ -63,12 +63,12 @@ class TablaJPanel extends JScrollPane {
 		
 		tablaPanel= new JPanel(new GridLayout(hoja.filas+1,hoja.columnas+1));
 		
-		for(int i=0;i<hoja.columnas+1;i++) {
+		for(int i=0;i < hoja.columnas+1;i++) {
 			JLabel etiqueta = new JLabel(MainUI.numALetras(i));
 			etiqueta.setPreferredSize(new Dimension(80,20));
 			tablaPanel.add(etiqueta);
 		}
-		for(int i=0;i<hoja.filas;i++) {
+		for(int i=0;i < hoja.filas;i++) {
 			JLabel etiqueta = new JLabel(Integer.toString(i+1));
 			etiqueta.setPreferredSize(new Dimension(80,20));
 			tablaPanel.add(etiqueta);
@@ -106,21 +106,21 @@ class TablaJPanel extends JScrollPane {
 	
 	public void deshacerCambios() {
 		punteroListaCambios--;
-		Actualizacion cambios=listaCambios[punteroListaCambios];
+		Actualizacion cambios = listaCambios[punteroListaCambios];
 		cambios.deshacer();
 	}
 	
 	public void rehacerCambios() {
-		Actualizacion rehacer=listaCambios[punteroListaCambios];
+		Actualizacion rehacer = listaCambios[punteroListaCambios];
 		rehacer.rehacer();
 		punteroListaCambios++;
 		
 	}
 	
 	public boolean poderDeshacer() {
-		boolean poderDeshacer=true;
+		boolean poderDeshacer = true;
 		if(punteroListaCambios==0) {
-			poderDeshacer=false;
+			poderDeshacer = false;
 		}
 		return poderDeshacer;
 	}
@@ -139,14 +139,14 @@ class TablaJPanel extends JScrollPane {
 		public final int columna;
 		public TextFieldCelda(String texto, int fila, int columna) {
 			super(texto);
-			this.fila=fila;
-			this.columna=columna;
+			this.fila = fila;
+			this.columna = columna;
 		}
 		
 		public void actualizarValor(String texto) {
 			try {
 				if(!texto.equals(hoja.getCelda(fila, columna).toString())) {
-					Celda celdaNueva=hoja.crearCelda(texto);
+					Celda celdaNueva = hoja.crearCelda(texto);
 					ActualizacionCelda actualizacion= new ActualizacionCelda(
 							hoja.getCelda(fila,columna),celdaNueva, fila, columna);
 					listaCambios[punteroListaCambios]=actualizacion;
@@ -168,43 +168,46 @@ class TablaJPanel extends JScrollPane {
 
 	}
 	
+	/*
+	 * Recorre las celdas de tablaPanel. Si alguna de estas es una CeldaFormula, calcua el valor de su fórmula
+	 */
     public void calcularFormulas() {
-    	Component component= null;
-    	int punteroPanel=0;
-    	ActualizacionCelda[] lista= new ActualizacionCelda[hoja.filas*hoja.columnas];
-    	int punteroLista=0;
-	    for(int i=0;i<hoja.filas;i++) {
-	    	
+    	Component component = null;
+    	int punteroPanel = 0;
+    	ActualizacionCelda[] lista = new ActualizacionCelda[hoja.filas*hoja.columnas];
+    	int punteroLista = 0;
+    	
+	    for(int i=0;i < hoja.filas;i++) {	
 	    	for(int j=0;j<hoja.columnas;j++) {
 	    		do {
 	    			component=tablaPanel.getComponent(punteroPanel++);
 	    			
 	    		}while(!(component instanceof JTextField));
 	        	if(hoja.getCelda(i,j) instanceof CeldaFormula) {
-	        		int valor=hoja.getCelda(i,j).getValue();
+	        		int valor = hoja.getCelda(i,j).getValue();
 	        		CeldaValor nuevaCelda = new CeldaValor(valor);
-	        		lista[punteroLista++]= new ActualizacionCelda(hoja.getCelda(i,j),nuevaCelda,i,j);
+	        		lista[punteroLista++] = new ActualizacionCelda(hoja.getCelda(i,j),nuevaCelda,i,j);
 	        		hoja.insertarCelda(nuevaCelda,i,j);
 	        		((JTextField)component).setText(Integer.toString(valor));
 	        	}
 	        }
 	    }
 	    if(lista[0]!=null) {
-	    	listaCambios[punteroListaCambios++]= new ActualizacionTabla(lista);
+	    	listaCambios[punteroListaCambios++] = new ActualizacionTabla(lista);
 			purgarListaCambios();
 	    }
     }
     
     public void borrarRegistroCambios() {
     	for(int i=0;i<listaCambios.length && listaCambios[i]!=null;i++) {
-    		listaCambios[i]=null;
+    		listaCambios[i] = null;
     	}
     	punteroListaCambios=0;
     }
     
     public void purgarListaCambios() {
     	for(int i=punteroListaCambios;i<listaCambios.length && listaCambios[i]!=null;i++) {
-    		listaCambios[i]=null;
+    		listaCambios[i] = null;
     	}
     }
     
@@ -219,20 +222,20 @@ class TablaJPanel extends JScrollPane {
     	ActualizacionCelda[] lista;
     	
     	public ActualizacionTabla(ActualizacionCelda[] lista) {
-    		this.lista=lista;
+    		this.lista = lista;
     		
     	}
 
 		@Override
 		public void deshacer() {
-			for(int i=0;i<lista.length && lista[i]!=null;i++) {
+			for(int i=0;(i < lista.length) && (lista[i] != null);i++) {
 				lista[i].deshacer();
 			}
 		}
 
 		@Override
 		public void rehacer() {
-			for(int i=0;i<lista.length && lista[i]!=null;i++) {
+			for(int i=0;(i < lista.length) && (lista[i] != null);i++) {
 				lista[i].rehacer();
 			}
 		}
@@ -245,10 +248,10 @@ class TablaJPanel extends JScrollPane {
     	private int fila;
     	private int columna;
     	public ActualizacionCelda(Celda celdaAntigua, Celda celdaNueva, int fila, int columna) {
-    		this.celdaAntigua=celdaAntigua;
-    		this.celdaNueva=celdaNueva;
-    		this.fila=fila;
-    		this.columna=columna;
+    		this.celdaAntigua = celdaAntigua;
+    		this.celdaNueva = celdaNueva;
+    		this.fila = fila;
+    		this.columna = columna;
     	}
 		@Override
 		public void deshacer() {

@@ -21,10 +21,10 @@ class FormulaJPanel extends JPanel {
 		this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS)); //El axis es como se ordena, si en horizontal o en vertical
 
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		formulaTextField= new JTextField();
-		aceptarButton= new JButton("Aceptar");
+		formulaTextField = new JTextField();
+		aceptarButton = new JButton("Aceptar");
 		aceptarButton.addActionListener(listenerAceptar);
-		cancelarButton= new JButton("Cancelar");
+		cancelarButton = new JButton("Cancelar");
 		cancelarButton.addActionListener(listenerCancelar);
 		formulaTextField.setEnabled(false);
 		aceptarButton.setEnabled(false);
@@ -55,7 +55,7 @@ class FormulaJPanel extends JPanel {
 	
 	//Devuelvo el texto que hay dentro del textfield
 	public String recuperarTexto() {
-		String texto=formulaTextField.getText();
+		String texto =formulaTextField.getText();
 		formulaTextField.setText("");
 		this.desabilitarEntrada();
 		return texto;

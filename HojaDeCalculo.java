@@ -23,39 +23,39 @@ public class HojaDeCalculo {
 	
 	
 	public HojaDeCalculo(int filas, int columnas, String[] datos) {
-		celdas= new Celda[filas][columnas];
+		celdas = new Celda[filas][columnas];
 		asignarFilas(datos);
 		this.filas=filas;
 		this.columnas=columnas;
 	}
 	
 	public HojaDeCalculo(int filas, int columnas) {
-		celdas= new Celda[filas][columnas];
-		for(int i=0;i<filas;i++) {
-			for(int j=0;j<columnas;j++) {
-				celdas[i][j]= new CeldaValor(0);
+		celdas = new Celda[filas][columnas];
+		for(int i=0;i < filas;i++) {
+			for(int j=0;j < columnas;j++) {
+				celdas[i][j] = new CeldaValor(0);
 			}
 		}
-		this.filas=filas;
-		this.columnas=columnas;
+		this.filas = filas;
+		this.columnas = columnas;
 	}
 	
 	public HojaDeCalculo(File archivo) throws FileNotFoundException {
 		Scanner scan = new Scanner(archivo);
 		
 		
-		String linea= scan.nextLine();
-		this.columnas=Integer.parseInt(linea.substring(0,linea.indexOf(' ')));
-		this.filas=Integer.parseInt(linea.substring(linea.indexOf(' ')+1));
-		if(columnas<=0 || filas<=0) {
-			throw new IllegalArgumentException("El nÃºmero de filas y columnas no puede ser cero o menor que 0");
+		String linea = scan.nextLine();
+		this.columnas = Integer.parseInt(linea.substring(0,linea.indexOf(' ')));
+		this.filas = Integer.parseInt(linea.substring(linea.indexOf(' ')+1));
+		if(columnas <= 0 || filas <= 0) {
+			throw new IllegalArgumentException("El número de filas y columnas no puede ser cero o menor que 0");
 		}
-		String[] lineaFilas= new String[filas];
-		for(int j=0;j<filas;j++) { //Recopilo las filas de la hoja de calculo
+		String[] lineaFilas = new String[filas];
+		for(int j=0;j < filas;j++) { //Recopilo las filas de la hoja de calculo
 			lineaFilas[j]=scan.nextLine()+' ';
 		}
 
-		celdas= new Celda[filas][columnas];
+		celdas = new Celda[filas][columnas];
 		asignarFilas(lineaFilas);
 	}
 	
@@ -66,12 +66,12 @@ public class HojaDeCalculo {
 	    writer.write(columnas+" "+filas+"\n");
 
 		String hoja="";
-		for(int i=0;i<celdas.length;i++) {
-			for(int j=0;j<celdas[i].length;j++) {
-				hoja=hoja.concat(celdas[i][j].toString()+" ");
+		for(int i=0;i < celdas.length;i++) {
+			for(int j=0;j < celdas[i].length;j++) {
+				hoja = hoja.concat(celdas[i][j].toString()+" ");
 			}
-			hoja=hoja.substring(0,hoja.length()-1);
-			hoja=hoja.concat("\n");
+			hoja = hoja.substring(0,hoja.length()-1);
+			hoja = hoja.concat("\n");
 				
 		}
 		 writer.write(hoja);
@@ -84,7 +84,7 @@ public class HojaDeCalculo {
 	}
 	
 	public void insertarCelda(Celda celda, int fila, int columnas) {
-		celdas[fila][columnas]=celda;
+		celdas[fila][columnas] = celda;
 		return;
 	}
 	
@@ -93,19 +93,19 @@ public class HojaDeCalculo {
 	}
 	
 	public void asignarCelda(String s, int x, int y) {
-		if(s.charAt(0)=='=') {
-			CeldaFormula celdaF= new CeldaFormula(s.substring(1),this);
-			celdas[x][y]=celdaF;
+		if(s.charAt(0) == '=') {
+			CeldaFormula celdaF = new CeldaFormula(s.substring(1),this);
+			celdas[x][y] = celdaF;
 		} else {
-			CeldaValor celdaV= new CeldaValor(Integer.parseInt(s));
-			celdas[x][y]=celdaV;
+			CeldaValor celdaV = new CeldaValor(Integer.parseInt(s));
+			celdas[x][y] = celdaV;
 		}
 	
 	}
 	
 	public Celda crearCelda(String s) {
 		Celda celda;
-		if(s.charAt(0)=='=') {
+		if(s.charAt(0) == '=') {
 			celda= new CeldaFormula(s.substring(1),this);
 		} else {
 			celda= new CeldaValor(Integer.parseInt(s));
@@ -115,8 +115,8 @@ public class HojaDeCalculo {
 
 	private void asignarFilas(String[] filas) {
 		int numElementosRegistrados=0;
-		for(int i=0;i<celdas.length;i++) {
-			for(int j=0;j<celdas[i].length;j++) {
+		for(int i=0;i < celdas.length;i++) {
+			for(int j=0;j < celdas[i].length;j++) {
 				if(filas[i].length()==0) {
 					throw new IllegalArgumentException("Hay espacios en la entrada");
 				}
@@ -133,11 +133,12 @@ public class HojaDeCalculo {
 		}
 		
 	}
+	
 	@Override
 	public String toString() {
 		String hoja="";
-		for(int i=0;i<celdas.length;i++) {
-			for(int j=0;j<celdas[i].length;j++) {
+		for(int i=0;i < celdas.length;i++) {
+			for(int j=0;j < celdas[i].length;j++) {
 				hoja=hoja.concat(celdas[i][j].getValue()+" ");
 			}
 			hoja=hoja.substring(0,hoja.length()-1);
